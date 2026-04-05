@@ -1,4 +1,4 @@
-package com.example.drivealert.ui.theme
+package com.example.drivealert.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
