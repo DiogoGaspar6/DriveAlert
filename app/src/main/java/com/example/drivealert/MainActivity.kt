@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.example.drivealert.navegation.Navigation
 import com.example.drivealert.theme.DriveAlertTheme
 import com.example.drivealert.ui.screens.CameraScreen
 
@@ -26,7 +27,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            CameraScreen()
+            Navigation()
         }
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
