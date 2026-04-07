@@ -30,6 +30,7 @@ class MotionSensorManager(context: Context) : SensorEventListener {
     }
 
     private var lastAcceleration = 0f
+    private var filteredAcceleration = 0f
 
     override fun onSensorChanged(event: SensorEvent) {
         val x = event.values[0]
@@ -39,10 +40,11 @@ class MotionSensorManager(context: Context) : SensorEventListener {
         val currentAcceleration = sqrt(x * x + y * y + z * z)
 
         val delta = kotlin.math.abs(currentAcceleration - lastAcceleration)
-
         lastAcceleration = currentAcceleration
 
-        isMoving = delta > 0.5f || currentAcceleration > 3
+        filteredAcceleration = filteredAcceleration * 0.9f + delta
+
+        isMoving = filteredAcceleration > 0.2f
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
