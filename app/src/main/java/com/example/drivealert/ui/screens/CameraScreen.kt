@@ -208,10 +208,10 @@ fun CameraScreen(navController: NavController) {
         }
     }
 
-    LaunchedEffect(isTired, isMoving) {
-        if (isTired && isMoving) {
+    LaunchedEffect(isTired) {
+        if (isTired) {
 
-            while (isTired && isMoving) {
+            while (isTired) {
 
                 if (!mediaPlayer.isPlaying) {
                     mediaPlayer.start()

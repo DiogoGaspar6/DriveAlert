@@ -5,6 +5,7 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.util.Log
 import kotlin.math.sqrt
 
 class MotionSensorManager(context: Context) : SensorEventListener {
@@ -21,7 +22,7 @@ class MotionSensorManager(context: Context) : SensorEventListener {
         sensorManager.registerListener(
             this,
             accelerometer,
-            SensorManager.SENSOR_DELAY_NORMAL
+            SensorManager.SENSOR_DELAY_UI
         )
     }
 
@@ -39,12 +40,12 @@ class MotionSensorManager(context: Context) : SensorEventListener {
 
         val currentAcceleration = sqrt(x * x + y * y + z * z)
 
-        val delta = kotlin.math.abs(currentAcceleration - lastAcceleration)
-        lastAcceleration = currentAcceleration
+        val deltaFromGravity = kotlin.math.abs(currentAcceleration - 9.81f)
 
-        filteredAcceleration = filteredAcceleration * 0.9f + delta
+        filteredAcceleration = filteredAcceleration * 0.95f + deltaFromGravity
 
-        isMoving = filteredAcceleration > 0.2f
+        isMoving = filteredAcceleration > 0.3f
+        Log.d("SENSOR", "isMoving: $isMoving filteredAcceleration: $filteredAcceleration")
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
