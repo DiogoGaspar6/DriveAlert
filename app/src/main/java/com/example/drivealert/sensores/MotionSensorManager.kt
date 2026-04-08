@@ -6,6 +6,9 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import kotlin.math.sqrt
 
 class MotionSensorManager(context: Context) : SensorEventListener {
@@ -15,15 +18,13 @@ class MotionSensorManager(context: Context) : SensorEventListener {
 
     private val accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
 
-    var isMoving = false
+    var isMoving by mutableStateOf(false)
         private set
 
     fun start() {
-        sensorManager.registerListener(
-            this,
-            accelerometer,
-            SensorManager.SENSOR_DELAY_UI
-        )
+        accelerometer?.let {
+            sensorManager.registerListener(this, it, SensorManager.SENSOR_DELAY_UI)
+        }
     }
 
     fun stop() {
